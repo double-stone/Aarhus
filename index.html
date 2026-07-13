@@ -172,6 +172,14 @@
     padding: 8px 8px 8px 10px;
   }
 
+  .nav-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    margin-left: 2px;
+    flex-shrink: 0;
+  }
+
   .theme-toggle {
     width: 34px; height: 34px;
     border-radius: 999px;
@@ -573,6 +581,21 @@
 
   <nav class="nav">
     <div class="nav-inner">
+      <svg class="nav-logo" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="40" y="40" width="944" height="944" rx="150" fill="#F7F3E8" stroke="#16202C" stroke-width="46"/>
+        <g fill="#16202C">
+          <rect x="150" y="650" width="160" height="130"/>
+          <polygon points="150,650 310,650 230,590"/>
+          <rect x="345" y="705" width="40" height="75"/>
+          <polygon points="340,705 390,705 365,260"/>
+          <rect x="430" y="680" width="220" height="100"/>
+          <polygon points="430,680 650,680 600,610 480,610"/>
+          <rect x="650" y="730" width="80" height="50"/>
+          <polygon points="650,730 730,730 690,680"/>
+          <rect x="760" y="650" width="160" height="130"/>
+          <polygon points="760,650 920,650 840,520"/>
+        </g>
+      </svg>
       <button class="theme-toggle" id="themeToggle" aria-label="Skift dag / nat">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" id="themeIcon">
           <circle cx="12" cy="12" r="4.2"></circle>

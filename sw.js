@@ -1,4 +1,4 @@
-const CACHE = 'aarhus-guide-v4';
+const CACHE = 'aarhus-guide-v5';
 const ASSETS = [
   './',
   './index.html',

@@ -1,0 +1,26 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <rect x="40" y="40" width="944" height="944" rx="150" fill="#F7F3E8" stroke="#16202C" stroke-width="36"/>
+  <rect x="110" y="110" width="804" height="804" rx="110" fill="none" stroke="#16202C" stroke-width="14"/>
+
+  <g fill="#16202C">
+    <!-- small house -->
+    <rect x="150" y="650" width="160" height="130"/>
+    <polygon points="150,650 310,650 230,590"/>
+
+    <!-- Domkirke spire -->
+    <rect x="345" y="705" width="40" height="75"/>
+    <polygon points="340,705 390,705 365,260"/>
+
+    <!-- gabled building -->
+    <rect x="430" y="680" width="220" height="100"/>
+    <polygon points="430,680 650,680 600,610 480,610"/>
+
+    <!-- small gable house -->
+    <rect x="650" y="730" width="80" height="50"/>
+    <polygon points="650,730 730,730 690,680"/>
+
+    <!-- tall gabled house -->
+    <rect x="760" y="650" width="160" height="130"/>
+    <polygon points="760,650 920,650 840,520"/>
+  </g>
+</svg>
