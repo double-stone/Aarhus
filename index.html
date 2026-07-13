@@ -1,0 +1,873 @@
+<title>Aarhus – for pengene</title>
+<style>
+  :root {
+    --sky-top: #3E7CB1;
+    --sky-mid: #7FB0D6;
+    --sky-horizon: #E7DCC3;
+    --harbor: #2E5C68;
+    --harbor-light: #4E8494;
+    --bld-far: #9FB8C9;
+    --bld-mid: #5D7C93;
+    --bld-near: #2B4356;
+    --window: #23303C;
+    --window-lit: #F0C674;
+    --window-opacity: 0.35;
+    --foliage-deep: #2E5233;
+    --foliage-mid: #3C6A3B;
+    --foliage-light: #5C8A4B;
+    --bg: #E7ECEF;
+    --surface: #FFFFFF;
+    --surface-2: #DDE3E6;
+    --ink: #16202C;
+    --ink-soft: #48586A;
+    --ink-faint: #7C8B98;
+    --gold: #B47F22;
+    --gold-soft: #C9932E;
+    --hairline: rgba(22, 32, 44, 0.14);
+    --card-glass: rgba(16, 22, 30, 0.52);
+    --card-glass-border: rgba(255, 255, 255, 0.16);
+    --cat-food: #5C7A3D;
+    --cat-drink: #B8842E;
+    --cat-exp: #2C6E7F;
+    --ring-glow: 0;
+    --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --sky-top: #0B1B3A;
+      --sky-mid: #1E3A5F;
+      --sky-horizon: #4A3B5C;
+      --harbor: #0E2A32;
+      --harbor-light: #16414C;
+      --bld-far: #26344A;
+      --bld-mid: #182535;
+      --bld-near: #0A1119;
+      --window: #16202C;
+      --window-lit: #E8B85C;
+      --window-opacity: 1;
+      --foliage-deep: #0F2417;
+      --foliage-mid: #16301B;
+      --foliage-light: #1E3B22;
+      --bg: #10151C;
+      --surface: #161D26;
+      --surface-2: #1D2530;
+      --ink: #EDE9DD;
+      --ink-soft: #B7BFC9;
+      --ink-faint: #7C8896;
+      --gold: #E8B85C;
+      --gold-soft: #E8B85C;
+      --hairline: rgba(237, 233, 221, 0.12);
+      --card-glass: rgba(6, 9, 14, 0.62);
+      --card-glass-border: rgba(255, 255, 255, 0.1);
+      --ring-glow: 1;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --sky-top: #0B1B3A;
+    --sky-mid: #1E3A5F;
+    --sky-horizon: #4A3B5C;
+    --harbor: #0E2A32;
+    --harbor-light: #16414C;
+    --bld-far: #26344A;
+    --bld-mid: #182535;
+    --bld-near: #0A1119;
+    --window: #16202C;
+    --window-lit: #E8B85C;
+    --window-opacity: 1;
+    --foliage-deep: #0F2417;
+    --foliage-mid: #16301B;
+    --foliage-light: #1E3B22;
+    --bg: #10151C;
+    --surface: #161D26;
+    --surface-2: #1D2530;
+    --ink: #EDE9DD;
+    --ink-soft: #B7BFC9;
+    --ink-faint: #7C8896;
+    --gold: #E8B85C;
+    --gold-soft: #E8B85C;
+    --hairline: rgba(237, 233, 221, 0.12);
+    --card-glass: rgba(6, 9, 14, 0.62);
+    --card-glass-border: rgba(255, 255, 255, 0.1);
+    --ring-glow: 1;
+  }
+
+  :root[data-theme="light"] {
+    --sky-top: #3E7CB1;
+    --sky-mid: #7FB0D6;
+    --sky-horizon: #E7DCC3;
+    --harbor: #2E5C68;
+    --harbor-light: #4E8494;
+    --bld-far: #9FB8C9;
+    --bld-mid: #5D7C93;
+    --bld-near: #2B4356;
+    --window: #23303C;
+    --window-lit: #F0C674;
+    --window-opacity: 0.35;
+    --foliage-deep: #2E5233;
+    --foliage-mid: #3C6A3B;
+    --foliage-light: #5C8A4B;
+    --bg: #E7ECEF;
+    --surface: #FFFFFF;
+    --surface-2: #DDE3E6;
+    --ink: #16202C;
+    --ink-soft: #48586A;
+    --ink-faint: #7C8B98;
+    --gold: #B47F22;
+    --gold-soft: #C9932E;
+    --hairline: rgba(22, 32, 44, 0.14);
+    --card-glass: rgba(16, 22, 30, 0.52);
+    --card-glass-border: rgba(255, 255, 255, 0.16);
+    --ring-glow: 0;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  body { -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .page { width: 100%; }
+
+  /* ---------- NAV ---------- */
+
+  .nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px clamp(16px, 4vw, 40px) 0;
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(10, 16, 24, 0.38);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    padding: 8px 8px 8px 10px;
+  }
+
+  .theme-toggle {
+    width: 34px; height: 34px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    color: #F7F3E8;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+  }
+  .theme-toggle:hover { background: rgba(255, 255, 255, 0.2); }
+  .theme-toggle svg { width: 16px; height: 16px; }
+
+  .nav-link {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(247, 243, 232, 0.88);
+    padding: 9px 16px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .nav-link:hover { background: rgba(255, 255, 255, 0.12); }
+
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #16202C;
+    background: #F7F3E8;
+    padding: 9px 16px;
+    border-radius: 999px;
+    margin-left: 4px;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: #fff; }
+  .nav-cta svg { width: 12px; height: 12px; }
+
+  .nav-clock {
+    position: absolute;
+    top: 30px;
+    right: clamp(16px, 4vw, 40px);
+    z-index: 30;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(247, 243, 232, 0.92);
+    font-variant-numeric: tabular-nums;
+  }
+  .nav-clock .city {
+    letter-spacing: 0.1em;
+    color: rgba(247, 243, 232, 0.6);
+    font-size: 11px;
+  }
+
+  @media (max-width: 720px) {
+    .nav-link { display: none; }
+    .nav-clock { display: none; }
+  }
+
+  /* ---------- HERO ---------- */
+
+  .hero {
+    position: relative;
+    width: 100%;
+    height: min(100vh, 880px);
+    min-height: 560px;
+    overflow: hidden;
+    background: linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-mid) 46%, var(--sky-horizon) 82%);
+  }
+
+  .hero svg { display: block; width: 100%; height: 100%; }
+
+  .rainbow-ring {
+    position: absolute;
+    top: 12%;
+    left: 68%;
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    border: 20px solid transparent;
+    border-image: conic-gradient(#E8453C, #F0A23A, #F2D33C, #6FAE5C, #3E86C4, #6A5BA8, #B25CA0, #E8453C) 1;
+    box-shadow: 0 0 calc(10px + 26px * var(--ring-glow)) rgba(240, 200, 120, var(--ring-glow));
+    transition: box-shadow 0.6s ease;
+  }
+
+  .cloud {
+    position: absolute;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.5);
+    filter: blur(1px);
+    opacity: 0.55;
+  }
+  .cloud.c1 { width: 180px; height: 34px; top: 10%; left: -10%; animation: driftA 70s linear infinite; }
+  .cloud.c2 { width: 120px; height: 24px; top: 20%; left: -20%; animation: driftB 95s linear infinite; }
+  .cloud.c3 { width: 90px;  height: 18px; top: 34%;  left: -15%; animation: driftA 55s linear infinite 8s; }
+
+  @keyframes driftA { from { transform: translateX(0); } to { transform: translateX(140vw); } }
+  @keyframes driftB { from { transform: translateX(0); } to { transform: translateX(150vw); } }
+
+  .plane-rig {
+    position: absolute;
+    top: 32%;
+    left: -26%;
+    animation: fly 36s linear infinite;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+  }
+  @keyframes fly { from { transform: translateX(0); } to { transform: translateX(150vw); } }
+
+  .tree-corner { position: absolute; top: -6%; z-index: 20; pointer-events: none; }
+  .tree-corner.left { left: -4%; transform-origin: top left; animation: sway 9s ease-in-out infinite; }
+  .tree-corner.right { right: -4%; transform-origin: top right; animation: sway 11s ease-in-out infinite reverse; }
+  @keyframes sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(0.8deg); } }
+
+  .hero-copy {
+    position: absolute;
+    inset: 0;
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: clamp(90px, 16vh, 150px);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(247, 243, 232, 0.75);
+    margin: 0 0 14px;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    color: #F7F3E8;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.25);
+    text-wrap: balance;
+  }
+  .hero-title .line1 {
+    display: block;
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .hero-title .line2 {
+    display: block;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-style: italic;
+    font-weight: 400;
+    color: rgba(247, 243, 232, 0.86);
+    margin-top: 4px;
+  }
+
+  .glass-card {
+    position: absolute;
+    left: clamp(16px, 5vw, 56px);
+    bottom: clamp(16px, 6vh, 60px);
+    z-index: 18;
+    width: min(440px, calc(100vw - 32px));
+    background: var(--card-glass);
+    border: 1px solid var(--card-glass-border);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 18px;
+    padding: 28px 30px 30px;
+    pointer-events: auto;
+  }
+
+  .glass-card h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+    line-height: 1.25;
+    color: #F7F3E8;
+    margin: 0 0 12px;
+    text-wrap: balance;
+  }
+
+  .glass-card p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: rgba(247, 243, 232, 0.82);
+    margin: 0 0 18px;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #F7F3E8;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(247, 243, 232, 0.4);
+    padding-bottom: 2px;
+  }
+  .card-link:hover { border-color: #F7F3E8; }
+  .card-link svg { width: 13px; height: 13px; transition: transform 0.2s ease; }
+  .card-link:hover svg { transform: translateY(3px); }
+
+  /* ---------- SKYLINE DIVIDER ---------- */
+
+  .skyline-divider { display: block; width: 100%; height: 36px; }
+
+  /* ---------- MAIN CONTENT ---------- */
+
+  main { background: var(--bg); }
+
+  section.block {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: clamp(52px, 8vw, 92px) clamp(20px, 5vw, 40px);
+  }
+
+  .cat-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .eyebrow-dark {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0;
+  }
+  #mad .eyebrow-dark { color: var(--cat-food); }
+  #drikke .eyebrow-dark { color: var(--cat-drink); }
+  #oplevelser .eyebrow-dark { color: var(--cat-exp); }
+
+  h3.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    font-weight: 500;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .lede {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0 0 34px;
+  }
+
+  .spot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 760px) { .spot-grid { grid-template-columns: 1fr; } }
+
+  .spot-card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-top: 3px solid var(--cat-c, var(--gold));
+    border-radius: 14px;
+    padding: 20px 22px 22px;
+  }
+  #mad .spot-card { --cat-c: var(--cat-food); }
+  #drikke .spot-card { --cat-c: var(--cat-drink); }
+  #oplevelser .spot-card { --cat-c: var(--cat-exp); }
+
+  .spot-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .spot-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .spot-price {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cat-c, var(--gold));
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .spot-area {
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .spot-note {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* Footer */
+
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding: 36px clamp(20px, 5vw, 40px) 44px;
+    max-width: 1040px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-mark {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .footer-meta {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cloud, .plane-rig, .tree-corner { animation: none !important; }
+    .reveal { transition: none; opacity: 1; transform: none; }
+  }
+
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+</style>
+
+<div class="page">
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <button class="theme-toggle" id="themeToggle" aria-label="Skift dag / nat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" id="themeIcon">
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"></path>
+        </svg>
+      </button>
+      <a class="nav-link" href="#mad">Mad</a>
+      <a class="nav-link" href="#drikke">Drikke</a>
+      <a class="nav-link" href="#oplevelser">Oplevelser</a>
+      <a class="nav-cta" href="#mad">Se guiden
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+      </a>
+    </div>
+  </nav>
+
+  <div class="nav-clock">
+    <span class="city">Aarhus</span>
+    <span id="clock">--:--</span>
+  </div>
+
+  <section class="hero" id="hero">
+    <svg viewBox="0 0 1440 760" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+      <!-- far buildings -->
+      <g fill="var(--bld-far)" opacity="0.85">
+        <rect x="0" y="440" width="70" height="170"/>
+        <rect x="80" y="410" width="55" height="200"/>
+        <rect x="150" y="455" width="90" height="155"/>
+        <rect x="1180" y="420" width="60" height="190"/>
+        <rect x="1250" y="445" width="80" height="165"/>
+        <rect x="1340" y="400" width="65" height="210"/>
+      </g>
+
+      <!-- mid buildings: crow-stepped gables -->
+      <g fill="var(--bld-mid)">
+        <rect x="30" y="510" width="80" height="130"/>
+
+        <!-- stepped gable 1 -->
+        <g>
+          <rect x="230" y="590" width="120" height="50"/>
+          <rect x="240" y="565" width="100" height="25"/>
+          <rect x="250" y="542" width="80" height="23"/>
+          <rect x="260" y="520" width="60" height="22"/>
+          <rect x="270" y="498" width="40" height="22"/>
+          <rect x="280" y="478" width="20" height="20"/>
+        </g>
+
+        <rect x="1020" y="490" width="70" height="150"/>
+        <rect x="1100" y="510" width="55" height="130"/>
+      </g>
+
+      <!-- near buildings (foreground) -->
+      <g fill="var(--bld-near)">
+        <rect x="-20" y="570" width="90" height="110"/>
+
+        <!-- Aarhus Domkirke: spire + cross -->
+        <g>
+          <rect x="430" y="470" width="46" height="210"/>
+          <polygon points="430,470 476,470 453,410"/>
+          <rect x="449" y="380" width="8" height="34"/>
+          <rect x="440" y="392" width="26" height="6"/>
+        </g>
+
+        <!-- stepped gable 2 -->
+        <g>
+          <rect x="520" y="580" width="110" height="100"/>
+          <rect x="532" y="556" width="86" height="24"/>
+          <rect x="544" y="533" width="62" height="23"/>
+          <rect x="556" y="511" width="38" height="22"/>
+          <rect x="566" y="491" width="18" height="20"/>
+        </g>
+
+        <rect x="660" y="545" width="70" height="135"/>
+
+        <!-- Dokk1-ish modern block -->
+        <g>
+          <rect x="760" y="560" width="140" height="120"/>
+          <g fill="var(--window-lit)" opacity="var(--window-opacity)">
+            <rect x="772" y="574" width="116" height="4"/>
+            <rect x="772" y="590" width="116" height="4"/>
+            <rect x="772" y="606" width="116" height="4"/>
+            <rect x="772" y="622" width="116" height="4"/>
+            <rect x="772" y="638" width="116" height="4"/>
+          </g>
+        </g>
+
+        <!-- stepped gable 3 -->
+        <g>
+          <rect x="930" y="585" width="105" height="95"/>
+          <rect x="941" y="562" width="83" height="23"/>
+          <rect x="953" y="540" width="59" height="22"/>
+          <rect x="965" y="519" width="35" height="21"/>
+          <rect x="975" y="500" width="15" height="19"/>
+        </g>
+
+        <rect x="1160" y="550" width="80" height="135"/>
+        <rect x="1250" y="590" width="110" height="100"/>
+        <rect x="1370" y="540" width="70" height="140"/>
+      </g>
+
+      <g id="windowLayer"></g>
+
+      <!-- harbor -->
+      <rect x="0" y="700" width="1440" height="60" fill="var(--harbor)"/>
+      <rect x="0" y="700" width="1440" height="8" fill="var(--harbor-light)" opacity="0.6"/>
+      <g fill="#F4F1E8" opacity="0.85">
+        <polygon points="180,712 200,712 190,694"/>
+        <rect x="179" y="712" width="22" height="3"/>
+        <polygon points="740,720 758,720 749,704"/>
+        <rect x="739" y="720" width="20" height="3"/>
+        <polygon points="1180,708 1202,708 1191,688"/>
+        <rect x="1179" y="708" width="24" height="3"/>
+      </g>
+    </svg>
+
+    <div class="rainbow-ring"></div>
+
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+
+    <div class="plane-rig">
+      <svg width="190" height="34" viewBox="0 0 190 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="4" y="14" width="136" height="14" rx="2" fill="#F7F3E8" stroke="#16202C" stroke-width="0.6"/>
+        <text x="72" y="24.5" font-family="Georgia, serif" font-weight="700" font-size="10.5" fill="#C8102E" text-anchor="middle">Kom s&#229; de hvide</text>
+        <line x1="140" y1="21" x2="154" y2="21" stroke="#F7F3E8" stroke-width="1.4" opacity="0.85"/>
+        <g transform="translate(154,10)">
+          <polygon points="0,11 30,11 36,8 30,5 0,5" fill="#EDE9DD"/>
+          <polygon points="8,5 18,5 12,-6 6,-2" fill="#EDE9DD"/>
+          <polygon points="8,11 18,11 12,20 6,17" fill="#D8D2C2"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="tree-corner left">
+      <svg width="260" height="220" viewBox="0 0 260 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M20 0 L26 60 L14 120" stroke="var(--foliage-deep)" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <path d="M22 40 L70 70" stroke="var(--foliage-deep)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="30" cy="20" rx="60" ry="46" fill="var(--foliage-deep)"/>
+        <ellipse cx="90" cy="8" rx="50" ry="40" fill="var(--foliage-mid)"/>
+        <ellipse cx="8" cy="55" rx="46" ry="38" fill="var(--foliage-mid)"/>
+        <ellipse cx="60" cy="46" rx="42" ry="32" fill="var(--foliage-light)"/>
+        <ellipse cx="130" cy="30" rx="30" ry="24" fill="var(--foliage-light)" opacity="0.9"/>
+      </svg>
+    </div>
+
+    <div class="tree-corner right">
+      <svg width="260" height="220" viewBox="0 0 260 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M240 0 L234 60 L246 120" stroke="var(--foliage-deep)" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <path d="M238 40 L190 70" stroke="var(--foliage-deep)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="230" cy="20" rx="60" ry="46" fill="var(--foliage-deep)"/>
+        <ellipse cx="170" cy="8" rx="50" ry="40" fill="var(--foliage-mid)"/>
+        <ellipse cx="252" cy="55" rx="46" ry="38" fill="var(--foliage-mid)"/>
+        <ellipse cx="200" cy="46" rx="42" ry="32" fill="var(--foliage-light)"/>
+        <ellipse cx="130" cy="30" rx="30" ry="24" fill="var(--foliage-light)" opacity="0.9"/>
+      </svg>
+    </div>
+
+    <div class="hero-copy">
+      <p class="eyebrow">Mad &middot; Drikke &middot; Oplevelser</p>
+      <h1 class="hero-title">
+        <span class="line1">Aarhus</span>
+        <span class="line2">uden at spr&aelig;nge banken</span>
+      </h1>
+    </div>
+
+    <div class="glass-card">
+      <h2>Mad, drikke og oplevelser der er pengene v&aelig;rd</h2>
+      <p>En lokal guide til Aarhus' bedste billige perler &mdash; ingen Michelin-stjerner, bare gode steder.</p>
+      <a class="card-link" href="#mad">Se stederne
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+      </a>
+    </div>
+  </section>
+
+  <svg class="skyline-divider" viewBox="0 0 1440 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect width="1440" height="36" fill="var(--bg)"/>
+    <g fill="var(--ink-faint)" opacity="0.35">
+      <rect x="40" y="18" width="14" height="18"/>
+      <rect x="60" y="10" width="10" height="26"/>
+      <rect x="140" y="22" width="16" height="14"/>
+      <rect x="300" y="6" width="8" height="30"/>
+      <rect x="500" y="16" width="14" height="20"/>
+      <rect x="700" y="12" width="10" height="24"/>
+      <rect x="900" y="20" width="16" height="16"/>
+      <rect x="1100" y="8" width="8" height="28"/>
+      <rect x="1300" y="18" width="14" height="18"/>
+      <rect x="1360" y="12" width="10" height="24"/>
+    </g>
+  </svg>
+
+  <main>
+    <section class="block reveal" id="mad">
+      <div class="cat-head"><p class="eyebrow-dark">Mad</p></div>
+      <h3 class="section-title">Mad der er pengene v&aelig;rd</h3>
+      <p class="lede">Ingen tasting-menuer &mdash; bare steder hvor man g&aring;r mæt og glad ud, uden at kigge sig tilbage p&aring; kvitteringen.</p>
+      <div class="spot-grid" id="madGrid"></div>
+    </section>
+
+    <section class="block reveal" id="drikke">
+      <div class="cat-head"><p class="eyebrow-dark">Drikke</p></div>
+      <h3 class="section-title">Drikke der er pengene v&aelig;rd</h3>
+      <p class="lede">Fadøl, naturvin og kaffe der smager af noget &mdash; til priser der ikke &oslash;delægger weekenden.</p>
+      <div class="spot-grid" id="drikkeGrid"></div>
+    </section>
+
+    <section class="block reveal" id="oplevelser">
+      <div class="cat-head"><p class="eyebrow-dark">Oplevelser</p></div>
+      <h3 class="section-title">Oplevelser der er pengene v&aelig;rd</h3>
+      <p class="lede">De bedste timer i Aarhus koster ofte ingenting &mdash; man skal bare vide, hvor man skal hen.</p>
+      <div class="spot-grid" id="oplevelserGrid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="footer-mark">Aarhus, uden at spr&aelig;nge banken</span>
+    <div class="footer-meta">
+      <span>Lokal guide &middot; opdateres l&oslash;bende</span>
+      <a href="#mad">Mad</a>
+      <a href="#drikke">Drikke</a>
+      <a href="#oplevelser">Oplevelser</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var toggle = document.getElementById('themeToggle');
+    var icon = document.getElementById('themeIcon');
+
+    function currentIsDark() {
+      var attr = root.getAttribute('data-theme');
+      if (attr === 'dark') return true;
+      if (attr === 'light') return false;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    function paintIcon(isDark) {
+      icon.innerHTML = isDark
+        ? '<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"></path>'
+        : '<circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"></path>';
+    }
+
+    paintIcon(currentIsDark());
+
+    toggle.addEventListener('click', function () {
+      var next = currentIsDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      paintIcon(next === 'dark');
+    });
+
+    // window lights on the near buildings
+    var layer = document.getElementById('windowLayer');
+    var buildings = [
+      [-20,570,90,110],[660,545,70,135],[1160,550,80,135],[1250,590,110,100],[1370,540,70,140]
+    ];
+    var frag = document.createDocumentFragment();
+    var seed = 11;
+    function rand() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+
+    buildings.forEach(function (b) {
+      var x = b[0], y = b[1], w = b[2], h = b[3];
+      var cols = Math.max(2, Math.floor(w / 14));
+      var rows = Math.max(3, Math.floor(h / 18));
+      for (var c = 0; c < cols; c++) {
+        for (var r = 0; r < rows; r++) {
+          if (rand() > 0.55) continue;
+          var wx = x + 6 + c * (w - 12) / cols;
+          var wy = y + 10 + r * (h - 20) / rows;
+          var rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          rect.setAttribute('x', wx.toFixed(1));
+          rect.setAttribute('y', wy.toFixed(1));
+          rect.setAttribute('width', 4);
+          rect.setAttribute('height', 6);
+          var lit = rand() > 0.45;
+          rect.setAttribute('fill', lit ? 'var(--window-lit)' : 'var(--window)');
+          rect.setAttribute('opacity', lit ? 'var(--window-opacity)' : '0.25');
+          frag.appendChild(rect);
+        }
+      }
+    });
+    layer.appendChild(frag);
+
+    // clock (Aarhus time)
+    var clockEl = document.getElementById('clock');
+    function tick() {
+      var fmt = new Intl.DateTimeFormat('da-DK', {
+        hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Copenhagen'
+      });
+      clockEl.textContent = fmt.format(new Date());
+    }
+    tick();
+    setInterval(tick, 30000);
+
+    // reveal on scroll
+    var items = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      items.forEach(function (el) { io.observe(el); });
+    } else {
+      items.forEach(function (el) { el.classList.add('in-view'); });
+    }
+
+    // ---- SPOTS DATA ----
+    // Placeholder picks — swap these in for your own once you've found them.
+    // price: "kr" | "kr kr" | "kr kr kr" | "Gratis"
+    var SPOTS = {
+      mad: [
+        { name: 'Bageriet Hjørnet', area: 'Frederiksbjerg', price: 'kr', note: 'Rugbrød og wienerbrød til under 30 kr. Kø om lørdagen, men det går hurtigt.' },
+        { name: 'Nudler No. 5', area: 'Latinerkvarteret', price: 'kr kr', note: 'Ramen der mætter uden at koste en formue. Godt til to.' },
+        { name: 'Smørrebrød & Sønner', area: 'Åboulevarden', price: 'kr kr', note: 'Klassisk smørrebrød til frokostpris, gerne med udsigt til åen.' }
+      ],
+      drikke: [
+        { name: 'Bryghus Ved Åen', area: 'Åboulevarden', price: 'kr kr', note: 'Hjemmebrygget pilsner og happy hour frem til kl. 18.' },
+        { name: 'Vinstuen Baghuset', area: 'Klosterport', price: 'kr kr', note: 'Naturvin uden naturvin-priser. Små retter ved siden af.' },
+        { name: 'Ølbaren Kajen', area: 'Aarhus Ø', price: 'kr', note: 'Havneudsigt og en fadøl der ikke koster en formue.' }
+      ],
+      oplevelser: [
+        { name: 'Havnebadet', area: 'Aarhus Ø', price: 'Gratis', note: 'Spring i havnen, solnedgang inkluderet uden ekstra betaling.' },
+        { name: 'Skovturen i Riis Skov', area: 'Riis Skov', price: 'Gratis', note: 'Bøgeskov til fods langs vandet — ingen billet nødvendig.' },
+        { name: 'Loppemarkedet på Ingerslevs', area: 'Vesterbro', price: 'Gratis–kr', note: 'Søndagsloppemarked med gode fund til småpenge.' }
+      ]
+    };
+
+    function renderGrid(id, items) {
+      var grid = document.getElementById(id);
+      var html = items.map(function (s) {
+        return '<div class="spot-card">' +
+          '<div class="spot-top"><h4 class="spot-name">' + s.name + '</h4><span class="spot-price">' + s.price + '</span></div>' +
+          '<span class="spot-area">' + s.area + '</span>' +
+          '<p class="spot-note">' + s.note + '</p>' +
+          '</div>';
+      }).join('');
+      grid.innerHTML = html;
+    }
+
+    renderGrid('madGrid', SPOTS.mad);
+    renderGrid('drikkeGrid', SPOTS.drikke);
+    renderGrid('oplevelserGrid', SPOTS.oplevelser);
+  })();
+</script>
