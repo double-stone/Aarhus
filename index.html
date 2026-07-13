@@ -1,6 +1,6 @@
-<title>Aarhus – for pengene</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="Mad, drikke og oplevelser i Aarhus, der er pengene værd." />
+<title>Aarhus – your guide to local deals and experiences</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="description" content="Aarhus – your guide to local deals and experiences: mad, drikke og oplevelser der er pengene værd." />
 <meta name="theme-color" content="#16202C" />
 <link rel="manifest" href="manifest.json" />
 <link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32" />
@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Aarhus" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <style>
   :root {
     --sky-top: #3E7CB1;
@@ -231,6 +232,7 @@
 
   @media (max-width: 720px) {
     .nav-link { display: none; }
+    .nav-cta { display: none; }
     .nav-clock { display: none; }
   }
 
@@ -283,10 +285,16 @@
   }
   @keyframes fly { from { transform: translateX(0); } to { transform: translateX(150vw); } }
 
-  .tree-corner { position: absolute; top: -6%; z-index: 20; pointer-events: none; }
+  .tree-corner { position: absolute; top: -6%; z-index: 5; pointer-events: none; }
   .tree-corner.left { left: -4%; transform-origin: top left; animation: sway 9s ease-in-out infinite; }
   .tree-corner.right { right: -4%; transform-origin: top right; animation: sway 11s ease-in-out infinite reverse; }
   @keyframes sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(0.8deg); } }
+
+  @media (max-width: 720px) {
+    .tree-corner svg { width: 130px; height: 110px; }
+    .tree-corner.left { left: -14%; top: -3%; }
+    .tree-corner.right { right: -14%; top: -3%; }
+  }
 
   .hero-copy {
     position: absolute;
@@ -324,11 +332,12 @@
   }
   .hero-title .line2 {
     display: block;
-    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-size: clamp(1.05rem, 2.4vw, 1.6rem);
     font-style: italic;
     font-weight: 400;
     color: rgba(247, 243, 232, 0.86);
-    margin-top: 4px;
+    margin: 6px auto 0;
+    max-width: 26ch;
   }
 
   .glass-card {
@@ -524,6 +533,40 @@
   }
 
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  /* ---------- BOTTOM TAB BAR (mobile) ---------- */
+
+  .tabbar { display: none; }
+
+  @media (max-width: 720px) {
+    body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+
+    .tabbar {
+      display: flex;
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 40;
+      background: var(--surface);
+      border-top: 1px solid var(--hairline);
+      padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+      box-shadow: 0 -6px 20px rgba(0,0,0,0.12);
+    }
+    .tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
+      color: var(--ink-faint);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 6px 2px 4px;
+      border-radius: 12px;
+    }
+    .tab svg { width: 20px; height: 20px; }
+    .tab.active { color: var(--gold); }
+  }
 </style>
 
 <div class="page">
@@ -692,7 +735,7 @@
       <p class="eyebrow">Mad &middot; Drikke &middot; Oplevelser</p>
       <h1 class="hero-title">
         <span class="line1">Aarhus</span>
-        <span class="line2">uden at spr&aelig;nge banken</span>
+        <span class="line2">your guide to local deals and experiences</span>
       </h1>
     </div>
 
@@ -742,6 +785,14 @@
       <p class="lede">De bedste timer i Aarhus koster ofte ingenting &mdash; man skal bare vide, hvor man skal hen.</p>
       <div class="spot-grid" id="oplevelserGrid"></div>
     </section>
+
+    <section class="block reveal" id="kort">
+      <div class="cat-head"><p class="eyebrow-dark" style="color:var(--gold);">Kort</p></div>
+      <h3 class="section-title">Find stederne på kortet</h3>
+      <p class="lede">Tryk på en prik for at se, hvad der er af mad, drikke og oplevelser på den adresse. Farven på prikken viser kategorien.</p>
+      <div id="map" style="height:min(70vh,520px); border-radius:14px; overflow:hidden; border:1px solid var(--hairline);"></div>
+      <p style="font-size:12px; color:var(--ink-faint); margin-top:10px;">Kortdata &copy; <a href="https://www.openstreetmap.org/copyright" style="color:inherit;">OpenStreetMap</a>-bidragydere</p>
+    </section>
   </main>
 
   <footer>
@@ -751,11 +802,32 @@
       <a href="#mad">Mad</a>
       <a href="#drikke">Drikke</a>
       <a href="#oplevelser">Oplevelser</a>
+      <a href="#kort">Kort</a>
     </div>
   </footer>
 
+  <nav class="tabbar" aria-label="Sektioner">
+    <a href="#mad" class="tab" data-tab="mad">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7M5 3v7a2 2 0 0 0 4 0V3M9 3v18M17 3c-1.5 0-3 1.5-3 4v4h3M17 3v18"></path></svg>
+      <span>Mad</span>
+    </a>
+    <a href="#drikke" class="tab" data-tab="drikke">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-1.5 15a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2L6 3Z"></path><path d="M6.6 9h10.8"></path></svg>
+      <span>Drikke</span>
+    </a>
+    <a href="#oplevelser" class="tab" data-tab="oplevelser">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.8-6.3 3.8 1.7-7-5.4-4.7 7.1-.6L12 2Z"></path></svg>
+      <span>Oplevelser</span>
+    </a>
+    <a href="#kort" class="tab" data-tab="kort">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-6-2V4l6 2 6-2 6 2v14l-6-2-6 2Z"></path><path d="M9 6v14M15 4v14"></path></svg>
+      <span>Kort</span>
+    </a>
+  </nav>
+
 </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
   (function () {
     var root = document.documentElement;
@@ -914,6 +986,136 @@
     renderGrid('madGrid', SPOTS.mad);
     renderGrid('drikkeGrid', SPOTS.drikke);
     renderGrid('oplevelserGrid', SPOTS.oplevelser);
+
+    // ---- MAP ----
+    var ADDRESS_COORDS = {
+      'Ny Banegårdsgade 46': [56.151556, 10.209300],
+      'Grønnegade 41': [56.157901, 10.202684],
+      'Åboulevarden 20': [56.154768, 10.211167],
+      'Åboulevarden 30': [56.155188, 10.210452],
+      'Fredens Torv 2': [56.154106, 10.210436],
+      'Åboulevarden 38': [56.155481, 10.209853],
+      'Mindegade 6': [56.153833, 10.210866],
+      'Viborgvej 26': [56.160595, 10.184739],
+      'Nørregade 40': [56.160507, 10.208670],
+      'Sankt Clemens Stræde 7': [56.156796, 10.208243],
+      'Jægergårdsgade 164A': [56.147926, 10.211101],
+      'Irma Pedersens Gade 180B': [56.163368, 10.226491],
+      'Frederiksgade 25': [56.155614, 10.205992],
+      'Åboulevarden 39': [56.156507, 10.207436],
+      'Åboulevarden 18': [56.154689, 10.211358],
+      'Store Torv 3': [56.157033, 10.209000],
+      'Åboulevarden 35': [56.155972, 10.208391],
+      'Åboulevarden 31': [56.155639, 10.208900],
+      'Frederiksgade 58': [56.154704, 10.204331],
+      'Åboulevarden 46': [56.155801, 10.209314],
+      'Fiskergyde 4': [56.155777, 10.208809],
+      'Frederiksgade 52': [56.154811, 10.204466],
+      'Frederiksgade 26': [56.155594, 10.205661],
+      'Christiansgade 32': [56.155782, 10.203914],
+      'Frederiksgade 33': [56.155345, 10.205446],
+      'Frederiksgade 16': [56.156046, 10.206346],
+      'Frederiksgade 76': [56.153942, 10.203279],
+      'Skolegade 23': [56.155316, 10.211590],
+      'Frederiksgade 38–42': [56.155286, 10.205061],
+      'Nørre Allé 20': [56.160357, 10.207422]
+    };
+    var CAT_COLOR = { mad: '#5C7A3D', drikke: '#B8842E', oplevelser: '#2C6E7F' };
+
+    function addressPart(area) {
+      var idx = area.indexOf(', ');
+      return idx === -1 ? area : area.slice(idx + 2);
+    }
+
+    function initMap() {
+      var mapEl = document.getElementById('map');
+      if (!mapEl || !window.L) return;
+
+      var locations = {};
+      ['mad', 'drikke', 'oplevelser'].forEach(function (cat) {
+        SPOTS[cat].forEach(function (spot) {
+          var key = addressPart(spot.area);
+          var coords = ADDRESS_COORDS[key];
+          if (!coords) return;
+          if (!locations[key]) locations[key] = { coords: coords, entries: [] };
+          locations[key].entries.push({ cat: cat, name: spot.name, price: spot.price, note: spot.note });
+        });
+      });
+
+      var map = L.map('map', { scrollWheelZoom: false });
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(map);
+
+      var markers = [];
+      Object.keys(locations).forEach(function (key) {
+        var loc = locations[key];
+        var cats = {};
+        loc.entries.forEach(function (e) { cats[e.cat] = true; });
+        var catKeys = Object.keys(cats);
+        var color = catKeys.length === 1 ? CAT_COLOR[catKeys[0]] : '#C9932E';
+
+        var popupHtml = '<div style="font-family:var(--font-body);min-width:200px;max-width:240px;">' +
+          '<div style="font-family:var(--font-display);font-weight:600;font-size:14px;margin-bottom:6px;">' + key + '</div>' +
+          loc.entries.map(function (e) {
+            return '<div style="margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid rgba(0,0,0,0.08);">' +
+              '<div style="display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;">' +
+              '<span style="width:8px;height:8px;border-radius:999px;background:' + CAT_COLOR[e.cat] + ';display:inline-block;flex-shrink:0;"></span>' +
+              e.name + '<span style="margin-left:auto;font-weight:700;color:' + CAT_COLOR[e.cat] + ';font-size:11px;">' + e.price + '</span>' +
+              '</div>' +
+              '<div style="font-size:11.5px;color:#555;margin-top:2px;">' + e.note + '</div>' +
+              '</div>';
+          }).join('') +
+          '</div>';
+
+        var marker = L.circleMarker(loc.coords, {
+          radius: 9,
+          weight: 2,
+          color: '#fff',
+          fillColor: color,
+          fillOpacity: 0.95
+        }).addTo(map).bindPopup(popupHtml);
+        markers.push(marker);
+      });
+
+      if (markers.length) {
+        var group = L.featureGroup(markers);
+        map.fitBounds(group.getBounds(), { padding: [28, 28] });
+      } else {
+        map.setView([56.1567, 10.2108], 15);
+      }
+    }
+
+    if (document.getElementById('kort')) {
+      var mapObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            initMap();
+            mapObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.1 });
+      mapObserver.observe(document.getElementById('kort'));
+    }
+
+    // ---- BOTTOM TAB ACTIVE STATE ----
+    var tabs = document.querySelectorAll('.tab');
+    if (tabs.length) {
+      var tabSections = ['mad', 'drikke', 'oplevelser', 'kort']
+        .map(function (id) { return document.getElementById(id); })
+        .filter(Boolean);
+      var tabObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            tabs.forEach(function (t) { t.classList.remove('active'); });
+            var active = document.querySelector('.tab[data-tab="' + entry.target.id + '"]');
+            if (active) active.classList.add('active');
+          }
+        });
+      }, { threshold: 0.4, rootMargin: '-40% 0px -40% 0px' });
+      tabSections.forEach(function (section) { tabObserver.observe(section); });
+    }
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
