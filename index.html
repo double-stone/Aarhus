@@ -847,19 +847,55 @@
     // price: "kr" | "kr kr" | "kr kr kr" | "Gratis"
     var SPOTS = {
       mad: [
-        { name: 'Bageriet Hjørnet', area: 'Frederiksbjerg', price: 'kr', note: 'Rugbrød og wienerbrød til under 30 kr. Kø om lørdagen, men det går hurtigt.' },
-        { name: 'Nudler No. 5', area: 'Latinerkvarteret', price: 'kr kr', note: 'Ramen der mætter uden at koste en formue. Godt til to.' },
-        { name: 'Smørrebrød & Sønner', area: 'Åboulevarden', price: 'kr kr', note: 'Klassisk smørrebrød til frokostpris, gerne med udsigt til åen.' }
+        { name: 'Aarhus Street Food', area: 'Ny Banegårdsgade 46', price: 'fra 30 kr.', note: 'Food hall med boder som PitaPita, Za’atar, Mad Mex og BAP. Frokosttilbud man–tor 11.30–15.00, fx falafel 70 kr. eller bibimbap 55 kr.' },
+        { name: 'Hawaii Pizza', area: 'Grønnegade 41', price: '37 kr.', note: 'Frokosttilbud hverdage 11.30–15.00 — pizza nr. 1–9 til fast lav pris.' },
+        { name: 'Bone’s Aarhus C', area: 'Åboulevarden 20', price: '−15%', note: 'Early Birdy: 15% rabat ved spisning i restauranten man–tor 16.30–19.00.' },
+        { name: 'Food Club Aarhus', area: 'Åboulevarden 30', price: '−20%', note: 'Tag-selv-bord med 20% studierabat (gyldigt studiekort, grupper op til 6).' },
+        { name: 'Restaurant MellemRum', area: 'Fredens Torv 2', price: '350 kr.', note: 'Early Bird 3-retters man–tor — middagen skal være afsluttet før kl. 19.00.' },
+        { name: 'Cafe Faust', area: 'Åboulevarden 38', price: 'fra 245 kr.', note: 'Stort brunchtilbud med kaffe og juice — 245 kr. man–tor, 259 kr. fre–søn.' },
+        { name: 'Restaurant Klokken', area: 'Mindegade 6', price: '285 kr.', note: 'Klokken Hel smørrebrødsfrokost, serveres søn–tor 11.30–14.00 og fre–lør 11.30–16.00.' },
+        { name: 'Canotto Pizza', area: 'Viborgvej 26', price: 'Gratis dip', note: 'Bestil 1 pizza og få 1 dip + 1 sodavand med i købet (se aktuelt opslag på Instagram).' },
+        { name: 'Pho Oishii', area: 'Nørregade 40', price: '−10%', note: '10% rabat på takeaway — fx pho med oksekød til 98 kr. i stedet for 109 kr.' },
+        { name: 'Nori Bar', area: 'Sankt Clemens Stræde 7', price: '179 kr.', note: 'All you can eat-frokost kl. 11.00–15.00.' },
+        { name: 'Restaurant Kohalen', area: 'Jægergårdsgade 164A', price: 'fra 108 kr.', note: 'Klassisk smørrebrødsfrokost, fx fiskefilet med remoulade. Køkkenet åbent 11.30–16.00.' },
+        { name: 'Vesterlauget Ø', area: 'Irma Pedersens Gade 180B', price: '95 kr.', note: 'Dagens ret på Aarhus Ø kl. 17.00–20.30.' }
       ],
       drikke: [
-        { name: 'Bryghus Ved Åen', area: 'Åboulevarden', price: 'kr kr', note: 'Hjemmebrygget pilsner og happy hour frem til kl. 18.' },
-        { name: 'Vinstuen Baghuset', area: 'Klosterport', price: 'kr kr', note: 'Naturvin uden naturvin-priser. Små retter ved siden af.' },
-        { name: 'Ølbaren Kajen', area: 'Aarhus Ø', price: 'kr', note: 'Havneudsigt og en fadøl der ikke koster en formue.' }
+        { name: 'Lucy’s', area: 'Frederiksgade 25', price: '30 kr.', note: 'Stor fadøl 30 kr., 2 ens drinks 100 kr. Torsdag hele dagen samt fre–lør til kl. 22.00.' },
+        { name: 'Willis', area: 'Åboulevarden 39', price: '2-for-1', note: '2-for-1 på barkortet alle dage kl. 20.00–22.00. Ordinær fadøl 40 kr.' },
+        { name: 'To Kolde', area: 'Åboulevarden 18', price: '49 kr.', note: 'Alle store fadøl 49 kr. før kl. 20.00 hver dag.' },
+        { name: 'Alberts', area: 'Store Torv 3', price: 'fra 25 kr.', note: 'Fre–lør 12–17: stor fadøl fra 30 kr., drinks 25 kr. Fre–lør 17–02: 2-for-1 på udvalgte cocktails.' },
+        { name: 'Clemens Bar', area: 'Åboulevarden 35', price: 'Halv pris', note: 'Halv pris på cocktails og fadøl fre–lør kl. 21.00–23.00.' },
+        { name: 'London Bar', area: 'Åboulevarden 31', price: 'Happy hour', note: 'Happy hour indtil kl. 23.00 på åbningsdage. +25 cocktail- og dansebar, fre–lør 20–05.' },
+        { name: 'Enigma', area: 'Frederiksgade 58', price: '50 kr.', note: 'Alle cocktails 50 kr. Åbent ons–tor 16–00 og fre–lør 16–01.' },
+        { name: 'Herr Bartels', area: 'Åboulevarden 46', price: '2-for-1', note: '2-for-1 på cocktails, især onsdag og torsdag ved åen.' },
+        { name: 'Madam Cuba', area: 'Fiskergyde 4', price: '2-for-1', note: '2-for-1 på alle cocktails tors–lør indtil kl. 22.00, cubansk stemning.' },
+        { name: 'Casa de Antonio', area: 'Frederiksgade 52', price: '30 kr.', note: 'Vin 30 kr., 0,5L øl 35 kr. og 2-for-1 cocktails torsdag kl. 16–19.' },
+        { name: 'Oops', area: 'Frederiksgade 26', price: '50 kr./stk', note: '2 cocktails for 100 kr. alle dage kl. 15–17 og 20.30–21.30.' },
+        { name: 'Stechers', area: 'Christiansgade 32', price: '25 kr.', note: 'Fadøl 25 kr., vin 40 kr. Torsdag: 2 timer for 295 kr. inkl. tapasbræt for 99 kr.' },
+        { name: 'Hos Anders', area: 'Frederiksgade 25', price: '25 kr.', note: 'Stor fadøl 25 kr., fyraftenskande 80 kr. kl. 17–19, 3 sjusser 100 kr.' },
+        { name: 'Bjørns Bar', area: 'Frederiksgade 33', price: '15 kr.', note: 'Ceres Top 15 kr., fadøl 35 kr., Jägerbombs 30 kr. — bevidst lavprisbar.' },
+        { name: 'Waxies', area: 'Frederiksgade 16', price: '39 kr.', note: 'Stor fadøl 39 kr. hver dag — irsk sportspub med faste lave priser.' },
+        { name: 'The Golden Lion', area: 'Frederiksgade 76', price: '25 kr.', note: 'Student Night: 25 kr. pints fra kl. 18.00.' },
+        { name: 'Nori Bar', area: 'Sankt Clemens Stræde 7', price: '2-for-1', note: '2-for-1 cocktails fre–lør indtil kl. 00.00.' },
+        { name: 'Tokio Bar', area: 'Skolegade 23', price: 'Happy hour', note: 'Happy hour indtil kl. 20.00, ekstra lave priser torsdag. Rock’n’roll-stemning.' },
+        { name: 'Tir Na Nóg', area: 'Frederiksgade 38–42', price: 'Happy hour', note: 'Happy hour ved baren torsdag i forbindelse med pubquiz kl. 19.00.' },
+        { name: 'Annalises Bar', area: 'Nørre Allé 20', price: '45 kr.', note: 'Klassisk brunt værtshus — stor fadøl op til 45 kr.' }
       ],
       oplevelser: [
-        { name: 'Havnebadet', area: 'Aarhus Ø', price: 'Gratis', note: 'Spring i havnen, solnedgang inkluderet uden ekstra betaling.' },
-        { name: 'Skovturen i Riis Skov', area: 'Riis Skov', price: 'Gratis', note: 'Bøgeskov til fods langs vandet — ingen billet nødvendig.' },
-        { name: 'Loppemarkedet på Ingerslevs', area: 'Vesterbro', price: 'Gratis–kr', note: 'Søndagsloppemarked med gode fund til småpenge.' }
+        { name: 'Open Mic Stand-Up (engelsk)', area: 'Alberts, Store Torv 3', price: 'Gratis', note: 'Søndag kl. 19.30–21.30.' },
+        { name: 'Open Mic Stand-Up (dansk)', area: 'Alberts, Store Torv 3', price: '40 kr.', note: 'Mandag–torsdag kl. 20.00–22.00.' },
+        { name: 'Billigbar efter stand-up', area: 'Alberts, Store Torv 3', price: 'fra 30 kr.', note: 'Søn–tor kl. 22.00–00.00, fx stor fadøl 30 kr.' },
+        { name: 'Mandags Beerpong', area: 'Willis, Åboulevarden 39', price: 'Gratis', note: 'Mandag — præmie til 1. plads.' },
+        { name: 'Tirsdags Quiz', area: 'Willis, Åboulevarden 39', price: 'Uoplyst', note: 'Tirsdag — præmier til top 3.' },
+        { name: 'Onsdags MusikBanko', area: 'Willis, Åboulevarden 39', price: 'Uoplyst', note: 'Onsdag — præmier for 1 række, 2 rækker og fuld plade.' },
+        { name: 'Torsdags Karaoke', area: 'Willis, Åboulevarden 39', price: 'Gratis shot', note: 'Torsdag — gratis shot for hver sunget sang.' },
+        { name: 'Pubquiz + karaoke', area: 'Waxies, Frederiksgade 16', price: 'Uoplyst', note: 'Onsdag & torsdag: quiz kl. 20.00–21.30, karaoke kl. 22.00–01.00.' },
+        { name: 'Pub Quiz / Bingo Night', area: 'Tir Na Nóg, Frederiksgade 38–42', price: 'Uoplyst', note: 'Torsdag kl. 19.00, happy hour ved baren.' },
+        { name: 'Pub Quiz', area: 'The Golden Lion, Frederiksgade 76', price: 'Uoplyst', note: 'Onsdag kl. 20.00.' },
+        { name: 'Karaoke Thursday', area: 'The Golden Lion, Frederiksgade 76', price: 'Uoplyst', note: 'Torsdag kl. 21.00–00.00, studierabat nævnt i opslag.' },
+        { name: 'Salsa Night & Latin Party', area: 'Madam Cuba, Fiskergyde 4', price: 'Uoplyst', note: 'Torsdag kl. 19.00–02.00, intro/lektion kl. 20.15.' },
+        { name: 'Karaoke', area: 'To Kolde, Åboulevarden 18', price: 'Uoplyst', note: 'Fredag & lørdag fra kl. 21.00.' }
       ]
     };
 
