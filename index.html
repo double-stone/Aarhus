@@ -1,6 +1,6 @@
-<title>Aarhus – your guide to local deals and experiences</title>
+<title>Aarhus – din guide til lokale tilbud og oplevelser</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="description" content="Aarhus – your guide to local deals and experiences: mad, drikke og oplevelser der er pengene værd." />
+<meta name="description" content="Aarhus – din guide til lokale tilbud og oplevelser: mad, drikke og oplevelser der er pengene værd." />
 <meta name="theme-color" content="#16202C" />
 <link rel="manifest" href="manifest.json" />
 <link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32" />
@@ -157,7 +157,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 22px clamp(16px, 4vw, 40px) 0;
+    padding: calc(22px + env(safe-area-inset-top)) clamp(16px, 4vw, 40px) 0;
   }
 
   .nav-inner {
@@ -214,7 +214,7 @@
 
   .nav-clock {
     position: absolute;
-    top: 30px;
+    top: calc(30px + env(safe-area-inset-top));
     right: clamp(16px, 4vw, 40px);
     z-index: 30;
     display: flex;
@@ -735,7 +735,7 @@
       <p class="eyebrow">Mad &middot; Drikke &middot; Oplevelser</p>
       <h1 class="hero-title">
         <span class="line1">Aarhus</span>
-        <span class="line2">your guide to local deals and experiences</span>
+        <span class="line2">din guide til lokale tilbud og oplevelser</span>
       </h1>
     </div>
 
