@@ -538,6 +538,7 @@
   }
 
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .leaflet-interactive:focus { outline: none; }
 
   /* ---------- BOTTOM TAB BAR (mobile) ---------- */
 
@@ -1051,7 +1052,7 @@
         });
       });
 
-      var map = L.map('map', { scrollWheelZoom: false });
+      var map = L.map('map', { scrollWheelZoom: false, keyboard: false });
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap'
